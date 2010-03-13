@@ -34,16 +34,18 @@ class ami {
 		$ami = self::getInstance();
 		$c=new AmiContainer();
 		
+		require('Inspekt.php');
+		$input = Inspekt::makeSuperCage();  
 		require('pathvars.class.php');
 		/* if (is_array($db_parameters)) { 
 		    require_once('mysql.class.php');
 			$db = &new mysql('localhost',$db_parameters['user'],$db_parameters['pw'],$db_parameters['db']);} */
 		
-		$method = $_SERVER['REQUEST_METHOD'];
+		$method = $input->server->getAlpha('REQUEST_METHOD');
 		if (!in_array($method, array('GET', 'POST', 'PUT', 'DELETE'))) {
 			$method = 'GET';
 		}
-		$path = new PathVars($_SERVER['SCRIPT_NAME']);
+		$path = new PathVars($input->server->getAlnum('SCRIPT_NAME'));
 		$fullpath = $path->fetchAll();
 		if (count($fullpath) > 1) {
 		    array_pop($fullpath);
@@ -56,7 +58,8 @@ class ami {
 		
 		$c->path = $path;
 		$c->ami = $ami;
-	
+		$c->input = $input;
+		
 		if (array_key_exists($printpath,$urls)) {
 			if (class_exists($urls[$printpath])) {
 				//call_user_func_array(array($urls[$printpath], $method),array($c)) ;

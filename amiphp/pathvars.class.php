@@ -36,7 +36,7 @@ class PathVars {
     * @var string
     */
     var $pathVars;
-
+		
     /**
     * PathVars constructor
     * @param string receiving script url
@@ -55,12 +55,13 @@ class PathVars {
     * @access private
     */
     function fetchFragment () {
-        if ( !strstr($_SERVER['REQUEST_URI'],$this->baseUrl) )
+		$input = Inspekt::makeSuperCage();
+        if ( !strstr($input->server->testURI('REQUEST_URI'),$this->baseUrl) )
             trigger_error ('$baseUrl is invalid: '.$this->baseUrl );
         if ( $this->baseUrl != '/' )
-            $this->fragment=str_replace($this->baseUrl,'',$_SERVER['REQUEST_URI']);
+            $this->fragment=str_replace($this->baseUrl,'',$input->server->testURI('REQUEST_URI'));
         else
-            $this->fragment=$_SERVER['REQUEST_URI'];
+            $this->fragment=$input->server->testURI('REQUEST_URI');
     }
 
     /**
