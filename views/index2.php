@@ -1,0 +1,1 @@
+ami coming from  <?php echo $body; ?>
