@@ -11,4 +11,4 @@ It is still in very early stages, more deatils will come in next few days...
 ### Requirements
 PHP 5.
 
-Amit Singh http://amiworks.com
+[Amit Singh] (http://amiworks.com)
