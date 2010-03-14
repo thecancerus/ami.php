@@ -12,14 +12,14 @@
 
 class ami {	
 	static private $instance = NULL ;
-	
+	public $db_conf ='';
 	public static function getInstance()
     {
         if(self::$instance == NULL)
         {
             self::$instance = new ami();
         }
-            return self::$instance;
+        return self::$instance;
     }   
 
 	/**
@@ -34,17 +34,21 @@ class ami {
 		$ami = self::getInstance();
 		$c=new AmiContainer();
 		
+		$ami->db_conf=$db_parameters;
+		
 		require('Inspekt.php');
 		$input = Inspekt::makeSuperCage();  
+		
 		require('pathvars.class.php');
-		/* if (is_array($db_parameters)) { 
-		    require_once('mysql.class.php');
-			$db = &new mysql('localhost',$db_parameters['user'],$db_parameters['pw'],$db_parameters['db']);} */
+		
 		
 		$method = $input->server->getAlpha('REQUEST_METHOD');
 		if (!in_array($method, array('GET', 'POST', 'PUT', 'DELETE'))) {
 			$method = 'GET';
 		}
+		
+		$printpath='';
+		
 		$path = new PathVars($input->server->getRaw('SCRIPT_NAME'));
 		$fullpath = $path->fetchAll();
 
@@ -63,7 +67,6 @@ class ami {
 		
 		if (array_key_exists($printpath,$urls)) {
 			if (class_exists($urls[$printpath])) {
-				//call_user_func_array(array($urls[$printpath], $method),array($c)) ;
 				$loaded_class = new $urls[$printpath];
 				$loaded_class->$method($c);   
 			} 
@@ -73,9 +76,8 @@ class ami {
 			}
 		} 
 		else {
-			//call_user_func_array(array($urls['/'], $method),array($c)) ;
-				$loaded_class = new $urls['/'];
-				$loaded_class->$method($c);     
+			$loaded_class = new $urls['/'];
+			$loaded_class->$method($c);     
 		}	
 		
         return true;
@@ -131,6 +133,27 @@ class ami {
 	}
 	
 	/**
+    * establishes a connection to database
+    * @param array database connectivity parameters
+    * @return database object
+    * @access public
+    */
+	public function getDB()
+    {   
+	
+         if (is_array($this->db_conf)) { 
+		    require('ez_sql.php');
+			if($this->db_conf['type']=='mysql')
+				$db = new ezSQL_mysql($this->db_conf['user'],$this->db_conf['password'],$this->db_conf['dbname'],$this->db_conf['host']);
+			else if($this->db_conf['type']=='sqlite')
+				$db = new ezSQL_sqlite($this->db_conf['host'],$this->db_conf['dbname']); 
+				
+			return $db;	
+		} 
+		return false;
+    }
+	
+	/**
     * Redirect the request to the URL
     * @param string URL to rediret to
     * @return string
@@ -138,7 +161,7 @@ class ami {
     */
 	function redirect($location, $status=303)
     {   
-        self::httpHeader($status);
+        $this->httpHeader($status);
         header("Location: $location");
     }
     
