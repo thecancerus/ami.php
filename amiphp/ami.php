@@ -45,8 +45,9 @@ class ami {
 		if (!in_array($method, array('GET', 'POST', 'PUT', 'DELETE'))) {
 			$method = 'GET';
 		}
-		$path = new PathVars($input->server->getAlnum('SCRIPT_NAME'));
+		$path = new PathVars($input->server->getRaw('SCRIPT_NAME'));
 		$fullpath = $path->fetchAll();
+
 		if (count($fullpath) > 1) {
 		    array_pop($fullpath);
 		    $fullpath[] = '*';
@@ -199,5 +200,5 @@ class ami {
 class AmiContainer {
  protected $s=array();
  function __set($k, $c) { $this->s[$k]=$c; }
- function __get($k) { echo "Getting '$k'\n"; return $this->s[$k]; }
+ function __get($k) { return $this->s[$k]; }
 }
