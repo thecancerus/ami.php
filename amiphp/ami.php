@@ -39,6 +39,9 @@ class ami {
 		require('Inspekt.php');
 		$input = Inspekt::makeSuperCage();  
 		
+		require('session.php');
+		$sess=Session::getInstance();
+
 		require('pathvars.class.php');
 		
 		
@@ -64,6 +67,7 @@ class ami {
 		$c->path = $path;
 		$c->ami = $ami;
 		$c->input = $input;
+		$c->session = $sess;
 		
 		if (array_key_exists($printpath,$urls)) {
 			if (class_exists($urls[$printpath])) {
