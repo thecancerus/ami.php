@@ -1,0 +1,456 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0039)http://funkatron.com/inspekt/user_docs/ -->
+<HTML xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><STYLE>.chrome-seo_meta-nofollow,.chrome-seo_meta-nofollow *{outline:2px dashed #ffb400!important;outline-offset:1px;}.chrome-seo_nofollow,.chrome-seo_nofollow *{outline:2px dotted #e90000!important;outline-offset:1px;}</STYLE><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+
+	<TITLE>Inspekt user documentation</TITLE>
+	<SCRIPT src="./Inspekt user documentation_files/jquery.js" type="text/javascript" charset="utf-8"></SCRIPT>
+	<SCRIPT src="./Inspekt user documentation_files/showdown.js" type="text/javascript" charset="utf-8"></SCRIPT>
+	<SCRIPT src="./Inspekt user documentation_files/jquery.toc-0.1.js" type="text/javascript" charset="utf-8"></SCRIPT>
+	
+	<SCRIPT src="./Inspekt user documentation_files/shCore.js" type="text/javascript" charset="utf-8"></SCRIPT>
+	<SCRIPT src="./Inspekt user documentation_files/shBrushJScript.js" type="text/javascript" charset="utf-8"></SCRIPT>
+	<SCRIPT src="./Inspekt user documentation_files/shBrushPhp.js" type="text/javascript" charset="utf-8"></SCRIPT>
+	<SCRIPT src="./Inspekt user documentation_files/shBrushXml.js" type="text/javascript" charset="utf-8"></SCRIPT>
+	<SCRIPT src="./Inspekt user documentation_files/shBrushSql.js" type="text/javascript" charset="utf-8"></SCRIPT>
+	<SCRIPT src="./Inspekt user documentation_files/shBrushVb.js" type="text/javascript" charset="utf-8"></SCRIPT>
+	
+	
+	<LINK rel="stylesheet" href="./Inspekt user documentation_files/SyntaxHighlighter.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	
+	<LINK rel="stylesheet" href="./Inspekt user documentation_files/elementsImport.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	
+	<SCRIPT type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			
+			var converter = new Showdown.converter();
+			$('#markdown').html(converter.makeHtml($('#markdown').html()));
+			
+			dp.SyntaxHighlighter.ClipboardSwf = 'Scripts/clipboard.swf';
+			dp.SyntaxHighlighter.HighlightAll('code');
+			
+			window.document.title = $('h1:eq(0)').text();
+			
+			$.toc('h2,h3').prependTo('#toc');
+			
+		})
+		
+
+	</SCRIPT>
+	
+	<STYLE type="text/css" media="screen">
+		a:link, a:visited {
+			background-color:#ffffcc;
+			border:none;
+			text-decoration:none
+		}
+		
+		hr {
+			height:0px;
+			color:transparent;
+			border:none;
+			border-bottom:1px solid #000;
+		}
+	</STYLE>
+	
+<STYLE type="text/css">.dp-xml .cdata { color: #ff1493; }.dp-xml .tag, .dp-xml .tag-name { color: #069; font-weight: bold; }.dp-xml .attribute { color: red; }.dp-xml .attribute-value { color: blue; }</STYLE></HEAD><BODY style="margin:20px auto; width:760px">
+	
+	<DIV id="markdown"><H1>Inspekt user documentation</H1>
+
+<P><EM>Last update: 2008-01-02 • <A href="http://inspekt.org/">inspekt.org</A></EM></P>
+
+<HR>
+
+<DIV id="toc"><UL class="jquery-toc-1"><LI><A href="http://funkatron.com/inspekt/user_docs/#What-is-Inspekt">What is Inspekt</A></LI><UL class="jquery-toc-2"><LI><A href="http://funkatron.com/inspekt/user_docs/#Driving-principles-behind-Inspekt">Driving principles behind Inspekt</A></LI><LI><A href="http://funkatron.com/inspekt/user_docs/#Features-of-Inspekt">Features of Inspekt</A></LI></UL><LI><A href="http://funkatron.com/inspekt/user_docs/#Basic-Usage">Basic Usage</A></LI><LI><A href="http://funkatron.com/inspekt/user_docs/#Filtering-and-Validating-Input-with-Input-Cages">Filtering and Validating Input with Input Cages</A></LI><UL class="jquery-toc-2"><LI><A href="http://funkatron.com/inspekt/user_docs/#List-of-input-cage-creation-methods">List of input cage creation methods</A></LI><LI><A href="http://funkatron.com/inspekt/user_docs/#List-of-test-and-filter-methods">List of test and filter methods</A></LI><LI><A href="http://funkatron.com/inspekt/user_docs/#Using-the-Supercage">Using the Supercage</A></LI><LI><A href="http://funkatron.com/inspekt/user_docs/#Predefined-filtering-with-configuration-files">Predefined filtering with configuration files</A></LI><LI><A href="http://funkatron.com/inspekt/user_docs/#-Array-Path--queries-for-multidimensional-arrays">"Array Path" queries for multidimensional arrays</A></LI><LI><A href="http://funkatron.com/inspekt/user_docs/#Dealing-with-different-scopes">Dealing with different scopes</A></LI></UL><LI><A href="http://funkatron.com/inspekt/user_docs/#Filtering-non-superglobal-arrays">Filtering non-superglobal arrays</A></LI><LI><A href="http://funkatron.com/inspekt/user_docs/#Using-static-methods">Using static methods</A></LI><UL class="jquery-toc-2"><LI><A href="http://funkatron.com/inspekt/user_docs/#List-of-static-filters-and-validators">List of static filters and validators</A></LI></UL></UL></DIV>
+
+<A class="anchor" name="What-is-Inspekt"></A><H2 class="jquery-toc">What is Inspekt</H2>
+
+<P>Inspekt is an input filtering and validation library for PHP4 and PHP5.</P>
+
+<A class="anchor" name="Driving-principles-behind-Inspekt"></A><H3 class="jquery-toc">Driving principles behind Inspekt</H3>
+
+<OL>
+<LI>Accessing user input via the PHP superglobals is inherently dangerous, because the "default" action is to retrieve raw, potentially dangerous data</LI>
+<LI>Piecemeal, "inline" filtering/validation done at various places in an application's source code is too error-prone to be effective</LI>
+<LI>The purpose of a library or framework is to make a programmer's job easier. Verbose and/or complex solutions should be avoided unless they are the <EM>only</EM> solution</LI>
+</OL>
+
+<A class="anchor" name="Features-of-Inspekt"></A><H3 class="jquery-toc">Features of Inspekt</H3>
+
+<UL>
+<LI>'Cage' objects that encapsulate input and require the coder to use the provided filtering and validation methods to access input data</LI>
+<LI>Automatic application of filtering as defined in a configuration file</LI>
+<LI>A library of static filtering and validation methods</LI>
+<LI>A simple, clear API</LI>
+<LI>No external dependencies</LI>
+</UL>
+
+<A class="anchor" name="Basic-Usage"></A><H2 class="jquery-toc">Basic Usage</H2>
+
+<P>Here's a simple example of the most common way to use Inspekt. Here we:</P>
+
+<OL>
+<LI>Require the library</LI>
+<LI>create an <A href="http://funkatron.com/inspekt/user_docs/#supercage"><CODE>Inspekt_Supercage</CODE></A> to wrap all input inside <A href="http://funkatron.com/inspekt/user_docs/#cage"><CODE>Inspekt_Cage</CODE></A> objects</LI>
+<LI>check to see if the 'userid' value from the POST input is an integer
+<UL><LI>If so, $userid is assigned the value and it's inserted into a database</LI>
+<LI>If not, an error is triggered</LI></UL></LI>
+</OL>
+
+<H4>Example</H4>
+
+<DIV class="dp-highlighter"><DIV class="bar"><DIV class="tools"><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy to clipboard</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</A></DIV></DIV><OL start="1" class="dp-c"><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;require&nbsp;the&nbsp;inspekt&nbsp;library</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="keyword">require</SPAN><SPAN>&nbsp;</SPAN><SPAN class="string">"Inspekt.php"</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">//&nbsp;create&nbsp;a&nbsp;"SuperCage"&nbsp;to&nbsp;wrap&nbsp;all&nbsp;possible&nbsp;user&nbsp;input</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;the&nbsp;SuperCage&nbsp;should&nbsp;be&nbsp;created&nbsp;before&nbsp;doing&nbsp;*anything*&nbsp;else</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="vars">$input</SPAN><SPAN>&nbsp;=&nbsp;Inspekt::makeSuperCage();&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">//&nbsp;we&nbsp;need&nbsp;to&nbsp;ensure&nbsp;that&nbsp;$_POST['userid']&nbsp;is&nbsp;an&nbsp;integer</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="keyword">if</SPAN><SPAN>&nbsp;(</SPAN><SPAN class="vars">$userid</SPAN><SPAN>&nbsp;=&nbsp;</SPAN><SPAN class="vars">$input</SPAN><SPAN>-&gt;post-&gt;testInt(</SPAN><SPAN class="string">'userid'</SPAN><SPAN>))&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="comment">/*&nbsp;do&nbsp;stuff&nbsp;with&nbsp;$userid&nbsp;*/</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="vars">$db</SPAN><SPAN>-&gt;insert(</SPAN><SPAN class="string">"id={$userid}"</SPAN><SPAN>);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>}&nbsp;<SPAN class="keyword">else</SPAN><SPAN>&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;trigger_error(<SPAN class="string">'$userid&nbsp;input&nbsp;is&nbsp;invalid'</SPAN><SPAN>,&nbsp;E_USER_ERROR);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>}&nbsp;&nbsp;</SPAN></LI></OL></DIV><PRE name="code" class="php" style="display: none; ">// require the inspekt library
+require "Inspekt.php";
+
+// create a "SuperCage" to wrap all possible user input
+// the SuperCage should be created before doing *anything* else
+$input = Inspekt::makeSuperCage();
+
+// we need to ensure that $_POST['userid'] is an integer
+if ($userid = $input-&gt;post-&gt;testInt('userid')) {
+    /* do stuff with $userid */
+    $db-&gt;insert("id={$userid}");
+} else {
+    trigger_error('$userid input is invalid', E_USER_ERROR);
+}
+</PRE>
+
+<P><A name="cage"></A></P>
+
+<A class="anchor" name="Filtering-and-Validating-Input-with-Input-Cages"></A><H2 class="jquery-toc">Filtering and Validating Input with Input Cages</H2>
+
+<P><CODE>Inspekt_Cage</CODE> objects take an array of data and encapsulate it, so the values in the array can only be accessed through the methods of the <CODE>Input_Cage</CODE> object. The original array is destroyed by default, so the data <EM>must</EM> be accessed via the cage object's methods.</P>
+
+<H5>Example</H5>
+
+<DIV class="dp-highlighter"><DIV class="bar"><DIV class="tools"><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy to clipboard</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</A></DIV></DIV><OL start="1" class="dp-c"><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;Example:&nbsp;creating&nbsp;a&nbsp;cage&nbsp;for&nbsp;$_POST</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="keyword">require_once</SPAN><SPAN>&nbsp;</SPAN><SPAN class="string">"Inspekt.php"</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="vars">$cage_POST</SPAN><SPAN>&nbsp;=&nbsp;Inspekt::makePostCage();&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="vars">$userid</SPAN><SPAN>&nbsp;=&nbsp;</SPAN><SPAN class="vars">$cage_POST</SPAN><SPAN>-&gt;getInt(</SPAN><SPAN class="string">'userid'</SPAN><SPAN>);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="keyword">if</SPAN><SPAN>&nbsp;(&nbsp;!isset(</SPAN><SPAN class="vars">$_POST</SPAN><SPAN>[</SPAN><SPAN class="string">'userid'</SPAN><SPAN>])&nbsp;)&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="func">echo</SPAN><SPAN>&nbsp;</SPAN><SPAN class="string">'Cannot&nbsp;access&nbsp;input&nbsp;via&nbsp;$_POST&nbsp;--&nbsp;use&nbsp;the&nbsp;cage&nbsp;object'</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>}&nbsp;&nbsp;</SPAN></LI></OL></DIV><PRE name="code" class="php" style="display: none; ">// Example: creating a cage for $_POST
+require_once "Inspekt.php";
+
+$cage_POST = Inspekt::makePostCage();
+$userid = $cage_POST-&gt;getInt('userid');
+
+if ( !isset($_POST['userid']) ) {
+    echo 'Cannot access input via $_POST -- use the cage object';
+}
+</PRE>
+
+<A class="anchor" name="List-of-input-cage-creation-methods"></A><H3 class="jquery-toc">List of input cage creation methods</H3>
+
+<P>Inspekt provides static methods for quickly creating cages for each of PHP's input superglobals. These include:</P>
+
+<UL>
+<LI><P><CODE>Inspekt::makeGetCage()</CODE><BR>
+Returns an Inspekt_Cage for the <CODE>$_GET</CODE> array</P></LI>
+<LI><P><CODE>Inspekt::makePostCage()</CODE><BR>
+Returns an Inspekt_Cage for the <CODE>$_POST</CODE> array</P></LI>
+<LI><P><CODE>Inspekt::makeCookieCage()</CODE><BR>
+Returns an Inspekt_Cage for the <CODE>$_COOKIE</CODE> array</P></LI>
+<LI><P><CODE>Inspekt::makeServerCage()</CODE><BR>
+Returns an Inspekt_Cage for the <CODE>$_SERVER</CODE> array</P></LI>
+<LI><P><CODE>Inspekt::makeFilesCage()</CODE><BR>
+Returns an Inspekt_Cage for the <CODE>$_FILES</CODE> array</P></LI>
+<LI><P><CODE>Inspekt::makeEnvCage()</CODE><BR>
+Returns an Inspekt_Cage for the <CODE>$_ENV</CODE> array</P></LI>
+</UL>
+
+<A class="anchor" name="List-of-test-and-filter-methods"></A><H3 class="jquery-toc">List of test and filter methods</H3>
+
+<P>Cage objects have several methods for examining and filtering values. These include:</P>
+
+<UL>
+<LI><P><STRONG>Filters</STRONG><BR>
+Filter methods remove data from the value of the given key and return what remains. If the key does not exist, they return FALSE</P>
+
+<UL><LI><CODE>getAlnum</CODE> (mixed $key)</LI>
+<LI><CODE>getAlpha</CODE> (mixed $key)</LI>
+<LI><CODE>getDigits</CODE> (mixed $key)</LI>
+<LI><CODE>getDir</CODE> (mixed $key)</LI>
+<LI><CODE>getInt</CODE> (mixed $key)</LI>
+<LI><CODE>getPath</CODE> (mixed $key)</LI>
+<LI><CODE>getRaw</CODE> (string $key)</LI>
+<LI><CODE>noPath</CODE> (mixed $key)</LI>
+<LI><CODE>noTags</CODE> (mixed $key)</LI></UL></LI>
+<LI><P><STRONG>Testers</STRONG><BR>
+Tester methods return the value of the given key on pass, and FALSE on fail or if key fails</P>
+
+<UL><LI><CODE>testAlnum</CODE> (mixed $key)</LI>
+<LI><CODE>testAlpha</CODE> (mixed $key)</LI>
+<LI><CODE>testBetween</CODE> (mixed $key, mixed $min, mixed $max, [boolean $inc = TRUE])</LI>
+<LI><CODE>testCcnum</CODE> (mixed $key, [mixed $type = NULL])</LI>
+<LI><CODE>testDate</CODE> (mixed $key)</LI>
+<LI><CODE>testDigits</CODE> (mixed $key)</LI>
+<LI><CODE>testEmail</CODE> (mixed $key)</LI>
+<LI><CODE>testFloat</CODE> (mixed $key)</LI>
+<LI><CODE>testGreaterThan</CODE> (mixed $key, [mixed $min = NULL])</LI>
+<LI><CODE>testHex</CODE> (mixed $key)</LI>
+<LI><CODE>testHostname</CODE> (mixed $key, [integer $allow = ISPK_HOST_ALLOW_ALL])</LI>
+<LI><CODE>testInt</CODE> (mixed $key)</LI>
+<LI><CODE>testIp</CODE> (mixed $key)</LI>
+<LI><CODE>testLessThan</CODE> (mixed $key, [mixed $max = NULL])</LI>
+<LI><CODE>testOneOf</CODE> (mixed $key, [ $allowed = NULL])</LI>
+<LI><CODE>testPhone</CODE> (mixed $key, [ $country = 'US'])</LI>
+<LI><CODE>testRegex</CODE> (mixed $key, [mixed $pattern = NULL])</LI>
+<LI><CODE>testUri</CODE> (unknown_type $key)</LI>
+<LI><CODE>testZip</CODE> (mixed $key)</LI></UL></LI>
+<LI><P><STRONG>Other</STRONG></P>
+
+<UL><LI><CODE>keyExists</CODE> (mixed $key)</LI></UL></LI>
+</UL>
+
+<P><A name="supercage"></A></P>
+
+<A class="anchor" name="Using-the-Supercage"></A><H3 class="jquery-toc">Using the Supercage</H3>
+
+<P>The <CODE>Inspekt_Supercage</CODE> is a single object that contains <A href="http://funkatron.com/inspekt/user_docs/#cage"><CODE>Inspekt_Cage</CODE></A>s for each PHP input superglobal.  Inspekt provides a static method to create a Supercage:</P>
+
+<UL>
+<LI><CODE>Inspekt::makeSuperCage()</CODE><BR>
+Returns an <CODE>Inspekt_Supercage</CODE></LI>
+</UL>
+
+<P>The <CODE>Inspekt_Supercage</CODE> object has 7 public properties:</P>
+
+<UL>
+<LI><CODE>get</CODE><BR>
+an <CODE>Inspekt_Cage</CODE> wrapping the <CODE>$_GET</CODE> array</LI>
+<LI><CODE>post</CODE><BR>
+an <CODE>Inspekt_Cage</CODE> wrapping the <CODE>$_POST</CODE> array</LI>
+<LI><CODE>cookie</CODE><BR>
+an <CODE>Inspekt_Cage</CODE> wrapping the <CODE>$_COOKIE</CODE> array</LI>
+<LI><CODE>server</CODE><BR>
+an <CODE>Inspekt_Cage</CODE> wrapping the <CODE>$_SERVER</CODE> array</LI>
+<LI><CODE>files</CODE><BR>
+an <CODE>Inspekt_Cage</CODE> wrapping the <CODE>$_FILES</CODE> array</LI>
+<LI><CODE>env</CODE><BR>
+an <CODE>Inspekt_Cage</CODE> wrapping the <CODE>$_ENV</CODE> array</LI>
+</UL>
+
+<H5>Example</H5>
+
+<DIV class="dp-highlighter"><DIV class="bar"><DIV class="tools"><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy to clipboard</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</A></DIV></DIV><OL start="1" class="dp-c"><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;make&nbsp;a&nbsp;supercage&nbsp;and&nbsp;assign&nbsp;it&nbsp;to&nbsp;$input</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="vars">$input</SPAN><SPAN>&nbsp;=&nbsp;Inspekt::makeSuperCage();&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">//&nbsp;get&nbsp;email_addr&nbsp;from&nbsp;$_GET&nbsp;if&nbsp;it&nbsp;is&nbsp;a&nbsp;valid&nbsp;email,&nbsp;or&nbsp;trigger&nbsp;an&nbsp;error</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="keyword">if</SPAN><SPAN>&nbsp;(</SPAN><SPAN class="vars">$email_addr</SPAN><SPAN>&nbsp;=&nbsp;</SPAN><SPAN class="vars">$input</SPAN><SPAN>-&gt;get-&gt;testEmail(</SPAN><SPAN class="string">'email_addr'</SPAN><SPAN>))&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="func">echo</SPAN><SPAN>&nbsp;</SPAN><SPAN class="string">"valid&nbsp;email&nbsp;address"</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>}&nbsp;<SPAN class="keyword">else</SPAN><SPAN>&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;trigger_error(<SPAN class="string">'invalid&nbsp;email&nbsp;address'</SPAN><SPAN>,&nbsp;E_USER_ERROR);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>}&nbsp;&nbsp;</SPAN></LI></OL></DIV><PRE name="code" class="php" style="display: none; ">// make a supercage and assign it to $input
+$input = Inspekt::makeSuperCage();
+
+// get email_addr from $_GET if it is a valid email, or trigger an error
+if ($email_addr = $input-&gt;get-&gt;testEmail('email_addr')) {
+    echo "valid email address";
+} else {
+    trigger_error('invalid email address', E_USER_ERROR);
+}
+</PRE>
+
+<A class="anchor" name="Predefined-filtering-with-configuration-files"></A><H3 class="jquery-toc">Predefined filtering with configuration files</H3>
+
+<P>The <CODE>Inspekt::makeSuperCage()</CODE> method optionally takes a path to a configuration file. The config file defines a set of filters to apply globally and/or to a specific input parameter.  Filters defined in a configuration file are applied immediately, and are <EM>destructive</EM> – they will alter the value stored inside the Supercage.</P>
+
+<H5>Example</H5>
+
+<DIV class="dp-highlighter"><DIV class="bar"><DIV class="tools"><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy to clipboard</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</A></DIV></DIV><OL start="1" class="dp-vb"><LI class="alt"><SPAN><SPAN>;&nbsp;FILENAME:&nbsp;config.ini&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN>[_POST]&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN>*=noTags,getAlnum&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;*&nbsp;means&nbsp;apply&nbsp;to&nbsp;all&nbsp;values&nbsp;in&nbsp;this&nbsp;input&nbsp;array&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN>username=getAlpha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;apply&nbsp;getAlpha&nbsp;automatically&nbsp;to&nbsp;username&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN>userid=getInt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;apply&nbsp;getInt&nbsp;automatically&nbsp;to&nbsp;userid&nbsp;&nbsp;</SPAN></LI></OL></DIV><PRE name="code" class="vb" style="display: none; ">; FILENAME: config.ini
+
+[_POST]
+*=noTags,getAlnum        ; * means apply to all values in this input array
+username=getAlpha        ; apply getAlpha automatically to username
+userid=getInt            ; apply getInt automatically to userid
+</PRE>
+
+<DIV class="dp-highlighter"><DIV class="bar"><DIV class="tools"><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy to clipboard</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</A></DIV></DIV><OL start="1" class="dp-c"><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;for&nbsp;the&nbsp;sake&nbsp;of&nbsp;this&nbsp;example,&nbsp;plug-in&nbsp;some&nbsp;values</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="vars">$_POST</SPAN><SPAN>[</SPAN><SPAN class="string">'userid'</SPAN><SPAN>]&nbsp;=&nbsp;</SPAN><SPAN class="string">'--12&lt;strong&gt;34&lt;/strong&gt;'</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="vars">$_POST</SPAN><SPAN>[</SPAN><SPAN class="string">'username'</SPAN><SPAN>]&nbsp;=&nbsp;</SPAN><SPAN class="string">'se77777enty_&lt;em&gt;fiv&lt;/em&gt;e!'</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;create&nbsp;a&nbsp;supercage&nbsp;and&nbsp;pass&nbsp;it&nbsp;a&nbsp;config&nbsp;file&nbsp;path</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="vars">$sc</SPAN><SPAN>&nbsp;=&nbsp;Inspekt::makeSuperCage(</SPAN><SPAN class="string">'./config.ini'</SPAN><SPAN>);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">//&nbsp;displays&nbsp;"1234"&nbsp;--&nbsp;the&nbsp;value&nbsp;has&nbsp;been&nbsp;altered</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="func">echo</SPAN><SPAN>&nbsp;</SPAN><SPAN class="vars">$sc</SPAN><SPAN>-&gt;post-&gt;getRaw(</SPAN><SPAN class="string">'userid'</SPAN><SPAN>);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></SPAN></LI></OL></DIV><PRE name="code" class="php" style="display: none; ">// for the sake of this example, plug-in some values
+$_POST['userid'] = '--12<STRONG>34</STRONG>';
+$_POST['username'] = 'se77777enty_<EM>fiv</EM>e!';
+
+// create a supercage and pass it a config file path
+$sc = Inspekt::makeSuperCage('./config.ini');
+
+// displays "1234" -- the value has been altered
+echo $sc-&gt;post-&gt;getRaw('userid');    
+</PRE>
+
+<A class="anchor" name="-Array-Path--queries-for-multidimensional-arrays"></A><H3 class="jquery-toc">"Array Path" queries for multidimensional arrays</H3>
+
+<P>Inspekt uses a special kind of formatting to make it easier to grab an arbitrary key from a deep multidimensional array. Let's take a form example like this:</P>
+
+<H5>Example</H5>
+
+<DIV class="dp-highlighter"><DIV class="bar"><DIV class="tools"><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy to clipboard</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</A></DIV></DIV><OL start="1" class="dp-xml"><LI class="alt"><SPAN><SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">form</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">action</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"formtest.php"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">method</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"POST"</SPAN><SPAN class="tag">&gt;</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">h3</SPAN><SPAN class="tag">&gt;</SPAN><SPAN>Enter&nbsp;5&nbsp;email&nbsp;addresses</SPAN><SPAN class="tag">&lt;/</SPAN><SPAN class="tag-name">h3</SPAN><SPAN class="tag">&gt;</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">input</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">type</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"text"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">name</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"email_addresses[group1][a]"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">value</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"foo1@bar.com"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">br</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">input</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">type</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"text"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">name</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"email_addresses[group1][b]"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">value</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"foo2@bar.com"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">br</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">input</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">type</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"text"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">name</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"email_addresses[group1][c]"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">value</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"foo3@bar.com"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">br</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">input</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">type</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"text"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">name</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"email_addresses[group2][a]"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">value</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"foo4@bar.com"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">br</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">input</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">type</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"text"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">name</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"email_addresses[group2][b]"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">value</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"foo5@bar.com"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">br</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">input</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">type</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"text"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">name</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"email_addresses[group3][a]"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">value</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"foo6@bar.com"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">br</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">input</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">type</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"text"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">name</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"email_addresses[group3][b]"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">value</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"foo7@bar.com"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">br</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="tag">&lt;</SPAN><SPAN class="tag-name">input</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">type</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"submit"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">name</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"submit"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">value</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"Go!"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="attribute">id</SPAN><SPAN>=</SPAN><SPAN class="attribute-value">"submit"</SPAN><SPAN>&nbsp;</SPAN><SPAN class="tag">/&gt;</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="tag">&lt;/</SPAN><SPAN class="tag-name">form</SPAN><SPAN class="tag">&gt;</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI></OL></DIV><PRE name="code" class="html" style="display: none; ">    &lt;form action="formtest.php" method="POST"&gt;
+        &lt;h3&gt;Enter 5 email addresses&lt;/h3&gt;
+        &lt;input type="text" name="email_addresses[group1][a]" value="foo1@bar.com" /&gt;&lt;br /&gt;
+        &lt;input type="text" name="email_addresses[group1][b]" value="foo2@bar.com" /&gt;&lt;br /&gt;
+        &lt;input type="text" name="email_addresses[group1][c]" value="foo3@bar.com" /&gt;&lt;br /&gt;
+        &lt;input type="text" name="email_addresses[group2][a]" value="foo4@bar.com" /&gt;&lt;br /&gt;
+        &lt;input type="text" name="email_addresses[group2][b]" value="foo5@bar.com" /&gt;&lt;br /&gt;
+        &lt;input type="text" name="email_addresses[group3][a]" value="foo6@bar.com" /&gt;&lt;br /&gt;
+        &lt;input type="text" name="email_addresses[group3][b]" value="foo7@bar.com" /&gt;&lt;br /&gt;
+
+        &lt;input type="submit" name="submit" value="Go!" id="submit" /&gt;
+    &lt;/form&gt;
+</PRE>
+
+<P>We could test a particular entry with the following code:</P>
+
+<DIV class="dp-highlighter"><DIV class="bar"><DIV class="tools"><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy to clipboard</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</A></DIV></DIV><OL start="1" class="dp-c"><LI class="alt"><SPAN><SPAN class="vars">$input</SPAN><SPAN>&nbsp;=&nbsp;Inspekt::makeSuperCage();&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="keyword">if</SPAN><SPAN>&nbsp;(</SPAN><SPAN class="vars">$email</SPAN><SPAN>&nbsp;=&nbsp;</SPAN><SPAN class="vars">$input</SPAN><SPAN>-&gt;post-&gt;testEmail(</SPAN><SPAN class="string">'/email_addresses/group3/a'</SPAN><SPAN>))&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="func">echo</SPAN><SPAN>&nbsp;</SPAN><SPAN class="vars">$email</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>}&nbsp;<SPAN class="keyword">else</SPAN><SPAN>&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="func">echo</SPAN><SPAN>&nbsp;</SPAN><SPAN class="string">"invalid&nbsp;address"</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>}&nbsp;&nbsp;</SPAN></LI></OL></DIV><PRE name="code" class="php" style="display: none; ">$input = Inspekt::makeSuperCage();
+
+if ($email = $input-&gt;post-&gt;testEmail('/email_addresses/group3/a')) {
+    echo $email;
+} else {
+    echo "invalid address";
+}
+</PRE>
+
+<P>Notes on array path querying:</P>
+
+<UL>
+<LI>The forward slash "/" is the separator, so you can't access keys where you're using that character</LI>
+<LI>Any numeric keys are converted to integers, so you can't access keys that are numeric strings</LI>
+<LI>All queries must include the full path from the root of the array</LI>
+<LI><P>Leading and trailing slashes are ignored. These are all equivalent:</P>
+
+<P>'/x/woot/booyah/'<BR>
+'/x/woot/booyah'<BR>
+'x/woot/booyah/'<BR>
+'x/woot/booyah'</P></LI>
+</UL>
+
+<A class="anchor" name="Dealing-with-different-scopes"></A><H3 class="jquery-toc">Dealing with different scopes</H3>
+
+<P>PHP's superglobals are convenient in that they maintain a global scope without the need to declare then as globals in each function. PHP unfortunately does not allow user-defined superglobals, </P>
+
+<P>All of the <CODE>Inspekt::make*Cage()</CODE> methods utilize a singleton pattern. This means the developer does not have to pass the cage object to and from functions, or use the global keyword, to access it outside the global scope.  Just use the make*Cage() method to access the same object you created in a different scope.</P>
+
+<H5>Example</H5>
+
+<DIV class="dp-highlighter"><DIV class="bar"><DIV class="tools"><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy to clipboard</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</A></DIV></DIV><OL start="1" class="dp-c"><LI class="alt"><SPAN><SPAN class="keyword">function</SPAN><SPAN>&nbsp;foo()&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="vars">$cage_foo</SPAN><SPAN>&nbsp;=&nbsp;Inspekt::makeServerCage();&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="keyword">return</SPAN><SPAN>&nbsp;</SPAN><SPAN class="vars">$cage_foo</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>}&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">//&nbsp;All&nbsp;of&nbsp;these&nbsp;return&nbsp;the&nbsp;*same&nbsp;object*</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="vars">$cage1</SPAN><SPAN>&nbsp;=&nbsp;Inspekt::makeServerCage();&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="vars">$cage2</SPAN><SPAN>&nbsp;=&nbsp;foo();&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="vars">$cage3</SPAN><SPAN>&nbsp;=&nbsp;Inspekt::makeServerCage();&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;outputs&nbsp;bool(true)</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>var_dump(<SPAN class="vars">$cage1</SPAN><SPAN>&nbsp;===&nbsp;</SPAN><SPAN class="vars">$cage2</SPAN><SPAN>&nbsp;&amp;&amp;&nbsp;</SPAN><SPAN class="vars">$cage2</SPAN><SPAN>&nbsp;===&nbsp;</SPAN><SPAN class="vars">$cage3</SPAN><SPAN>);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></SPAN></LI></OL></DIV><PRE name="code" class="php" style="display: none; ">function foo() {
+    $cage_foo = Inspekt::makeServerCage();
+    return $cage_foo;
+}
+
+// All of these return the *same object*
+$cage1 = Inspekt::makeServerCage();
+$cage2 = foo();
+$cage3 = Inspekt::makeServerCage();
+
+// outputs bool(true)
+var_dump($cage1 === $cage2 &amp;&amp; $cage2 === $cage3);    
+</PRE>
+
+<DIV class="dp-highlighter"><DIV class="bar"><DIV class="tools"><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy to clipboard</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</A></DIV></DIV><OL start="1" class="dp-c"><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;make&nbsp;an&nbsp;inspekt&nbsp;post&nbsp;cage</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="vars">$cage_POST</SPAN><SPAN>&nbsp;=&nbsp;Inspekt::makePostCage();&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="func">echo</SPAN><SPAN>&nbsp;</SPAN><SPAN class="string">"&lt;pre&gt;In&nbsp;MAIN:&nbsp;"</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="func">echo</SPAN><SPAN>&nbsp;var_dump(</SPAN><SPAN class="vars">$cage_POST</SPAN><SPAN>-&gt;getInt(</SPAN><SPAN class="string">'userid'</SPAN><SPAN>));&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="func">echo</SPAN><SPAN>&nbsp;</SPAN><SPAN class="string">"&lt;/pre&gt;\n"</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">/**</SPAN>&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">&nbsp;*&nbsp;first&nbsp;level&nbsp;of&nbsp;scoping</SPAN>&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">&nbsp;*/</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="keyword">function</SPAN><SPAN>&nbsp;testScoping()&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;testScoping2();&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN>}&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">/**</SPAN>&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">&nbsp;*&nbsp;second&nbsp;level&nbsp;of&nbsp;scoping</SPAN>&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">&nbsp;*/</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="keyword">function</SPAN><SPAN>&nbsp;testScoping2()&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="comment">//&nbsp;this&nbsp;returns&nbsp;the&nbsp;same&nbsp;object&nbsp;we&nbsp;created&nbsp;on&nbsp;line&nbsp;2</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="vars">$cage_POST</SPAN><SPAN>&nbsp;=&nbsp;Inspekt::makePostCage();&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="func">echo</SPAN><SPAN>&nbsp;</SPAN><SPAN class="string">"&lt;pre&gt;In&nbsp;"</SPAN><SPAN>&nbsp;.&nbsp;</SPAN><SPAN class="keyword">__FUNCTION__</SPAN><SPAN>.</SPAN><SPAN class="string">"():&nbsp;"</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="func">echo</SPAN><SPAN>&nbsp;var_dump(</SPAN><SPAN class="vars">$cage_POST</SPAN><SPAN>-&gt;getInt(</SPAN><SPAN class="string">'userid'</SPAN><SPAN>));&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="func">echo</SPAN><SPAN>&nbsp;</SPAN><SPAN class="string">"&lt;/pre&gt;\n"</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>}&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;test&nbsp;the&nbsp;singleton&nbsp;pattern</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>testScoping();&nbsp;&nbsp;</SPAN></LI></OL></DIV><PRE name="code" class="php" style="display: none; ">// make an inspekt post cage
+$cage_POST = Inspekt::makePostCage();
+echo "<PRE>In MAIN: ";
+echo var_dump($cage_POST-&gt;getInt('userid'));
+echo "</PRE>\n";
+
+/**
+ * first level of scoping
+ */
+function testScoping() {
+    testScoping2();
+}
+
+/**
+ * second level of scoping
+ */
+function testScoping2() {
+    // this returns the same object we created on line 2
+    $cage_POST = Inspekt::makePostCage();
+    echo "<PRE>In " . __FUNCTION__."(): ";
+    echo var_dump($cage_POST-&gt;getInt('userid'));
+    echo "</PRE>\n";
+}
+
+// test the singleton pattern
+testScoping();
+
+</PRE>
+
+<A class="anchor" name="Filtering-non-superglobal-arrays"></A><H2 class="jquery-toc">Filtering non-superglobal arrays</H2>
+
+<P>You can wrap any array in an <CODE>Inspekt_Cage</CODE>, not just superglobals.</P>
+
+<H5>Example</H5>
+
+<DIV class="dp-highlighter"><DIV class="bar"><DIV class="tools"><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy to clipboard</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</A></DIV></DIV><OL start="1" class="dp-c"><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;Example:&nbsp;wrap&nbsp;an&nbsp;arbitrary&nbsp;array&nbsp;in&nbsp;a&nbsp;cage</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="vars">$d</SPAN><SPAN>&nbsp;=&nbsp;</SPAN><SPAN class="keyword">array</SPAN><SPAN>();&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="vars">$d</SPAN><SPAN>[</SPAN><SPAN class="string">'input'</SPAN><SPAN>]&nbsp;=&nbsp;</SPAN><SPAN class="string">'&lt;img&nbsp;id="475"&gt;yes&lt;/img&gt;'</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="vars">$d</SPAN><SPAN>[]&nbsp;=&nbsp;</SPAN><SPAN class="keyword">array</SPAN><SPAN>(</SPAN><SPAN class="string">'foo'</SPAN><SPAN>,&nbsp;</SPAN><SPAN class="string">'bar&lt;br&nbsp;/&gt;'</SPAN><SPAN>,&nbsp;</SPAN><SPAN class="string">'yes&lt;P&gt;'</SPAN><SPAN>,&nbsp;1776);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="vars">$d</SPAN><SPAN>[</SPAN><SPAN class="string">'x'</SPAN><SPAN>][</SPAN><SPAN class="string">'woot'</SPAN><SPAN>]&nbsp;=&nbsp;</SPAN><SPAN class="keyword">array</SPAN><SPAN>(</SPAN><SPAN class="string">'booyah'</SPAN><SPAN>=&gt;</SPAN><SPAN class="string">'meet&nbsp;at&nbsp;the&nbsp;bar&nbsp;at&nbsp;7:30&nbsp;pm'</SPAN><SPAN>,&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN class="string">'ultimate'</SPAN><SPAN>=&gt;</SPAN><SPAN class="string">'&lt;strong&gt;hi&nbsp;there!&lt;/strong&gt;'</SPAN><SPAN>,&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;create&nbsp;our&nbsp;cage&nbsp;object</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="vars">$d_cage</SPAN><SPAN>&nbsp;=&nbsp;Inspekt_Cage::Factory(</SPAN><SPAN class="vars">$d</SPAN><SPAN>);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">//&nbsp;return&nbsp;the&nbsp;value&nbsp;of&nbsp;'input',&nbsp;stripped&nbsp;of&nbsp;html&nbsp;tags</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="vars">$input</SPAN><SPAN>&nbsp;=&nbsp;</SPAN><SPAN class="vars">$d_cage</SPAN><SPAN>-&gt;noTags(</SPAN><SPAN class="string">'input'</SPAN><SPAN>);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;get&nbsp;a&nbsp;portion&nbsp;of&nbsp;the&nbsp;array,&nbsp;with&nbsp;all&nbsp;non-alphanumeric&nbsp;chars&nbsp;stripped&nbsp;from&nbsp;values</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="vars">$x</SPAN><SPAN>&nbsp;=&nbsp;</SPAN><SPAN class="vars">$d_cage</SPAN><SPAN>-&gt;getAlnum(</SPAN><SPAN class="string">'x'</SPAN><SPAN>);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">/*</SPAN>&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">displays:</SPAN>&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">array&nbsp;(</SPAN>&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">&nbsp;&nbsp;'woot'&nbsp;=&gt;&nbsp;</SPAN>&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">&nbsp;&nbsp;array&nbsp;(</SPAN>&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">&nbsp;&nbsp;&nbsp;&nbsp;'booyah'&nbsp;=&gt;&nbsp;'meetatthebaratpm',</SPAN>&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">&nbsp;&nbsp;&nbsp;&nbsp;'ultimate'&nbsp;=&gt;&nbsp;'stronghitherestrong',</SPAN>&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">&nbsp;&nbsp;),</SPAN>&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">)</SPAN>&nbsp;</SPAN></LI><LI class="alt"><SPAN><SPAN class="comment">*/</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>var_export(<SPAN class="vars">$x</SPAN><SPAN>);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></SPAN></LI></OL></DIV><PRE name="code" class="php" style="display: none; ">// Example: wrap an arbitrary array in a cage
+$d = array();
+$d['input'] = '&lt;img id="475"&gt;yes&lt;/img&gt;';
+$d[] = array('foo', 'bar&lt;br /&gt;', 'yes&lt;P&gt;', 1776);
+$d['x']['woot'] = array('booyah'=&gt;'meet at the bar at 7:30 pm',
+                        'ultimate'=&gt;'&lt;strong&gt;hi there!&lt;/strong&gt;',
+                        );
+
+// create our cage object
+$d_cage = Inspekt_Cage::Factory($d);
+
+// return the value of 'input', stripped of html tags
+$input = $d_cage-&gt;noTags('input');
+
+// get a portion of the array, with all non-alphanumeric chars stripped from values
+$x = $d_cage-&gt;getAlnum('x');
+
+/*
+displays:
+array (
+  'woot' =&gt; 
+  array (
+    'booyah' =&gt; 'meetatthebaratpm',
+    'ultimate' =&gt; 'stronghitherestrong',
+  ),
+)
+*/
+var_export($x);    
+</PRE>
+
+<A class="anchor" name="Using-static-methods"></A><H2 class="jquery-toc">Using static methods</H2>
+
+<P>Inspekt also provides a library of filtering and validation methods that can be called statically. In cases where a simple one-off check makes more sense, you can use these instead of creating an <CODE>Inspekt_Cage</CODE>  or <CODE>Inspekt_Supercage</CODE> object.</P>
+
+<H5>Example</H5>
+
+<DIV class="dp-highlighter"><DIV class="bar"><DIV class="tools"><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy to clipboard</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</A><A href="http://funkatron.com/inspekt/user_docs/#" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</A></DIV></DIV><OL start="1" class="dp-c"><LI class="alt"><SPAN><SPAN class="comment">//&nbsp;static&nbsp;validation</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="keyword">if</SPAN><SPAN>&nbsp;(Inspekt::isEmail(</SPAN><SPAN class="vars">$email</SPAN><SPAN>))&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;sendMail(<SPAN class="vars">$email</SPAN><SPAN>,&nbsp;</SPAN><SPAN class="string">'Test&nbsp;Email'</SPAN><SPAN>,&nbsp;</SPAN><SPAN class="vars">$msg</SPAN><SPAN>);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>}&nbsp;<SPAN class="keyword">else</SPAN><SPAN>&nbsp;{&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;trigger_error(<SPAN class="string">'Email&nbsp;address&nbsp;not&nbsp;valid&nbsp;–&nbsp;could&nbsp;not&nbsp;send'</SPAN><SPAN>,&nbsp;E_USER_WARNING);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN>}&nbsp;&nbsp;</SPAN></LI><LI class="alt"><SPAN>&nbsp;&nbsp;</SPAN></LI><LI class=""><SPAN><SPAN class="comment">//&nbsp;static&nbsp;filtering</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="vars">$phone_number</SPAN><SPAN>&nbsp;=&nbsp;</SPAN><SPAN class="string">'(765)&nbsp;555-1234'</SPAN><SPAN>;&nbsp;&nbsp;</SPAN></SPAN></LI><LI class=""><SPAN><SPAN class="vars">$phone_number_digits</SPAN><SPAN>&nbsp;=&nbsp;Inspekt::getDigits(</SPAN><SPAN class="vars">$phone_number</SPAN><SPAN>);&nbsp;&nbsp;</SPAN></SPAN></LI><LI class="alt"><SPAN><SPAN class="func">echo</SPAN><SPAN>&nbsp;</SPAN><SPAN class="vars">$phone_number_digits</SPAN><SPAN>;&nbsp;</SPAN><SPAN class="comment">//&nbsp;outputs&nbsp;'7655551234';</SPAN><SPAN>&nbsp;&nbsp;</SPAN></SPAN></LI></OL></DIV><PRE name="code" class="php" style="display: none; ">// static validation
+if (Inspekt::isEmail($email))    {
+    sendMail($email, 'Test Email', $msg);
+} else {
+    trigger_error('Email address not valid – could not send', E_USER_WARNING);
+}
+
+// static filtering
+$phone_number = '(765) 555-1234';
+$phone_number_digits = Inspekt::getDigits($phone_number);
+echo $phone_number_digits; // outputs '7655551234';
+</PRE>
+
+<A class="anchor" name="List-of-static-filters-and-validators"></A><H3 class="jquery-toc">List of static filters and validators</H3>
+
+<UL>
+<LI><P><STRONG>Validators</STRONG></P>
+
+<UL><LI><CODE>Inspekt::isAlnum</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::isAlpha</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::isBetween</CODE> (mixed $value, mixed $min, mixed $max, [ $inc = TRUE])</LI>
+<LI><CODE>Inspekt::isCcnum</CODE> (mixed $value, [mixed $type = NULL])</LI>
+<LI><CODE>Inspekt::isDate</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::isDigits</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::isEmail</CODE> (string $value)</LI>
+<LI><CODE>Inspekt::isFloat</CODE> (string $value)</LI>
+<LI><CODE>Inspekt::isGreaterThan</CODE> (mixed $value, mixed $min)</LI>
+<LI><CODE>Inspekt::isHex</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::isHostname</CODE> (mixed $value, [integer $allow = ISPK_HOST_ALLOW_ALL])</LI>
+<LI><CODE>Inspekt::isInt</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::isIp</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::isLessThan</CODE> (mixed $value, mixed $max)</LI>
+<LI><CODE>Inspekt::isOneOf</CODE> (mixed $value, [ $allowed = NULL])</LI>
+<LI><CODE>Inspekt::isPhone</CODE> (mixed $value, [ $country = 'US'])</LI>
+<LI><CODE>Inspekt::isRegex</CODE> (mixed $value, [mixed $pattern = NULL])</LI>
+<LI><CODE>Inspekt::isUri</CODE> (string $value, [integer $mode = ISPK_URI_ALLOW_COMMON])</LI>
+<LI><CODE>Inspekt::isZip</CODE> (mixed $value)</LI></UL></LI>
+<LI><P><STRONG>Filters</STRONG></P>
+
+<UL><LI><CODE>Inspekt::getAlnum</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::getAlpha</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::getDigits</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::getDir</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::getInt</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::getPath</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::noPath</CODE> (mixed $value)</LI>
+<LI><CODE>Inspekt::noTags</CODE> (mixed $value)</LI></UL></LI>
+</UL></DIV>
+
+
+
+<DIV id="snippy-tooltip-div" style="background-color: white; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: rgb(68, 68, 68); border-right-color: rgb(68, 68, 68); border-bottom-color: rgb(68, 68, 68); border-left-color: rgb(68, 68, 68); border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; border-bottom-right-radius: 5px 5px; border-bottom-left-radius: 5px 5px; -webkit-box-shadow: rgb(170, 170, 170) 5px 5px 5px; z-index: -20000; position: fixed; visibility: hidden; top: 5px; right: 5px; width: 150px; height: 150px; padding-top: 0.5em; padding-right: 0.5em; padding-bottom: 0.5em; padding-left: 0.5em; "><DIV style="font-size: 11px; font-family: sans-serif; color: black; text-align: left; "><B>Move</B> your mouse, and <B>click</B> on interesting elements to save them as snippets.</DIV><DIV style="background-image: url(chrome-extension://maabelkjnhafpphacjecmcnkkmjndjgl/img/grad.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: transparent; width: 120px; height: 22px; border-top-left-radius: 2px 2px; border-top-right-radius: 2px 2px; border-bottom-right-radius: 2px 2px; border-bottom-left-radius: 2px 2px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(103, 140, 255); border-left-width: 1px; border-left-style: solid; border-left-color: rgb(103, 140, 255); text-align: center; padding-top: 0.3em; padding-right: 0.3em; padding-bottom: 0.3em; padding-left: 0.3em; margin-bottom: 0.5em; font-size: 14px; font-weight: bold; color: white; text-decoration: none; cursor: pointer; -webkit-box-shadow: rgb(170, 170, 170) 2px 2px 3px; background-position: 0% 0%; background-repeat: repeat no-repeat; "><IMG src="chrome-extension://maabelkjnhafpphacjecmcnkkmjndjgl/img/snipit.png" style="vertical-align: bottom-text; padding-right: 5px; display: inline"><SPAN>Done</SPAN></DIV><A href="http://funkatron.com/inspekt/user_docs/#" style="font-size: 11px; font-family: sans-serif; color: blue; font-weight: normal; text-align: left; ">Show current snippets</A></DIV><DIV id="snippy-initial" style="width: 0px; height: 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-style: initial; border-color: initial; "><DIV id="snippy-overlay" style="background-color: blue; opacity: 0.1; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: black; border-right-color: black; border-bottom-color: black; border-left-color: black; position: absolute; z-index: -10000; visibility: hidden; top: 0px; left: 0px; width: 100px; height: 100px; "></DIV></DIV></BODY></HTML>
