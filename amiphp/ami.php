@@ -37,7 +37,12 @@ class ami {
 		$ami->db_conf=$db_parameters;
 		
 		require('Inspekt.php');
-		$input = Inspekt::makeSuperCage();  
+		//$input = Inspekt::makeSuperCage();  
+		//needed to do this as caging cookies was breaking support for native session managment. 
+		$input = new AmiContainer();  
+		$input->post = Inspekt::makePostCage();  
+		$input->get = Inspekt::makeGetCage();  
+		$input->server = Inspekt::makeServerCage();  
 		
 		require('session.php');
 		$sess=Session::getInstance();

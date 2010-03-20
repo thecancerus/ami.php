@@ -124,13 +124,25 @@ class PathVars {
     }
 
 	/**
-    * Return a value from $this->pathVars given it's index
-    * @param int the index of this->pathVars to return
+    * Return base url along with file name.
+    * 
     * @return string
     * @access public
     */
     function fetchBaseUrl() {
         return $this->baseUrl;
+    }
+	
+	/**
+    * Return base url without file name.
+    * 
+    * @return string
+    * @access public
+    */
+    function getBasePath() {
+       $pos=strrpos($this->baseUrl,'/');
+		
+		return substr($this->baseUrl,0,$pos);
     }
     /**
     * Returns the number of variables found
