@@ -6,7 +6,7 @@
 class Session {
 	protected static $_instance;
 	protected $input;
-	private function __construct($input)
+	private function __construct()
 	{
 		session_start();
 	}
