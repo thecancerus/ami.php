@@ -57,7 +57,7 @@ class PathVars {
     function fetchFragment () {
 		$input = Inspekt::makeSuperCage();
         if ( !strstr($input->server->getRaw('REQUEST_URI'),$this->baseUrl) )
-            trigger_error ('$baseUrl is invalid: '.$this->baseUrl );
+            trigger_error ('$baseUrl is invalid: '.$this->baseUrl .' it should be'.$input->server->getRaw('REQUEST_URI'));
         if ( $this->baseUrl != '/' )
             $this->fragment=str_replace($this->baseUrl,'',$input->server->getRaw('REQUEST_URI'));
         else
@@ -121,6 +121,16 @@ class PathVars {
             return $this->pathVars[$index];
         else
             return false;
+    }
+
+	/**
+    * Return a value from $this->pathVars given it's index
+    * @param int the index of this->pathVars to return
+    * @return string
+    * @access public
+    */
+    function fetchBaseUrl() {
+        return $this->baseUrl;
     }
     /**
     * Returns the number of variables found
