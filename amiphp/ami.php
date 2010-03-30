@@ -36,13 +36,9 @@ class ami {
 		
 		$ami->db_conf=$db_parameters;
 		
-		require('Inspekt.php');
-		//$input = Inspekt::makeSuperCage();  
+		require('Input.php');
+		$input = new Input();  
 		//needed to do this as caging cookies was breaking support for native session managment. 
-		$input = new AmiContainer();  
-		$input->post = Inspekt::makePostCage();  
-		$input->get = Inspekt::makeGetCage();  
-		$input->server = Inspekt::makeServerCage();  
 		
 		require('session.php');
 		$sess=Session::getInstance();
@@ -50,14 +46,14 @@ class ami {
 		require('pathvars.class.php');
 		
 		
-		$method = $input->server->getAlpha('REQUEST_METHOD');
+		$method = $input->server('REQUEST_METHOD');
 		if (!in_array($method, array('GET', 'POST', 'PUT', 'DELETE'))) {
 			$method = 'GET';
 		}
 		
 		$printpath='';
 		
-		$path = new PathVars($input->server->getRaw('SCRIPT_NAME'));
+		$path = new PathVars($input->server('SCRIPT_NAME'),$input);
 		$fullpath = $path->fetchAll();
 
 		if (count($fullpath) > 1) {
